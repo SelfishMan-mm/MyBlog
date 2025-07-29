@@ -1,0 +1,320 @@
+// 响应式混合器
+@use 'sass:map';
+@use 'sass:color';
+@use './variables.scss' as vars;
+
+@mixin respond-to($breakpoint) {
+  $value: map.get(vars.$breakpoints, $breakpoint);
+  @if $value {
+    @media (min-width: $value) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  $value: map.get(vars.$breakpoints, $breakpoint);
+  @if $value {
+    @media (max-width: $value - 1px) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+@mixin respond-between($min, $max) {
+  $min-value: map.get(vars.$breakpoints, $min);
+  $max-value: map.get(vars.$breakpoints, $max);
+  @if $min-value and $max-value {
+    @media (min-width: $min-value) and (max-width: $max-value - 1px) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoints: #{$min} or #{$max}";
+  }
+}
+
+// 布局混合器
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// 文字混合器
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+@mixin font-smooth {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// 视觉效果混合器
+@mixin card-style {
+  background: color(bg-card);
+  border-radius: border-radius(3xl);
+  box-shadow: shadow(card);
+  border: 1.5px solid color(border-primary);
+  backdrop-filter: blur(2px);
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@mixin hover-lift {
+  transition: transform transition(base), box-shadow transition(base);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: shadow(lg);
+  }
+}
+
+@mixin hover-glow($color: #409EFF) {
+  transition: box-shadow transition(base);
+  
+  &:hover {
+    box-shadow: 0 0 20px rgba($color, 0.4);
+  }
+}
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+// 动画混合器
+@mixin fade-in($duration: transition(base)) {
+  opacity: 0;
+  animation: fadeIn $duration ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@mixin slide-up($duration: transition(base)) {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp $duration ease-out forwards;
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin scale-in($duration: transition(base)) {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: scaleIn $duration ease-out forwards;
+}
+
+@keyframes scaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@mixin pulse($color: #409EFF) {
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba($color, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba($color, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba($color, 0);
+    }
+  }
+}
+
+// 滚动条样式
+@mixin custom-scrollbar($width: 8px, $track-color: color(bg-secondary), $thumb-color: color(border-primary)) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: border-radius(full);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: border-radius(full);
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// 工具混合器
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid color(primary);
+    outline-offset: 2px;
+  }
+}
+
+// 粒子背景混合器
+@mixin particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+// 导航混合器
+@mixin nav-link {
+  color: color(text-primary);
+  text-decoration: none;
+  font-size: font-size(base);
+  font-family: 'CaskaydiaCove', 'CaskaydiaCove Nerd Font', 'Consolas', 'Monaco', 'Courier New', monospace;
+  transition: color transition(base);
+  
+  &.router-link-active {
+    color: color(primary);
+  }
+  
+  &:hover {
+    color: color(primary);
+  }
+}
+
+// 标签混合器
+@mixin tag-style($bg-color: color(primary), $text-color: color(text-primary)) {
+  display: inline-block;
+  padding: spacing(1) spacing(3);
+  background: $bg-color;
+  color: $text-color;
+  border-radius: border-radius(base);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+// 容器混合器
+@mixin container($max-width: 1200px) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 spacing(4);
+  
+  @include respond-to(md) {
+    padding: 0 spacing(6);
+  }
+  
+  @include respond-to(lg) {
+    padding: 0 spacing(8);
+  }
+}
+
+// 性能优化混合器
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@mixin will-change($properties...) {
+  will-change: $properties;
+}
+
+// 背景模糊混合器
+@mixin backdrop-blur($blur: 10px) {
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}

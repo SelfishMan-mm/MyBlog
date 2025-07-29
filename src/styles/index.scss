@@ -1,0 +1,17 @@
+// 样式系统入口文件
+// 注意：variables.scss 和 mixins.scss 已通过 Vite 全局导入
+// 这个文件主要用于导入其他样式文件
+
+// 1. 工具函数 (依赖 variables 和 mixins)
+@import './utils.scss';
+
+// 2. 主题系统 (依赖 variables)
+@import './themes.scss';
+
+// 3. 全局样式 (依赖所有上述文件)
+@import './global.scss';
+
+// 使用说明：
+// - variables.scss 和 mixins.scss 通过 Vite 全局可用
+// - 如需完整样式系统，导入此文件即可
+// - 单独使用某个功能时，可直接导入对应文件

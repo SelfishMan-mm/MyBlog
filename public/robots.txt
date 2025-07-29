@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# 站点地图
+Sitemap: https://meless.dev/sitemap.xml
+
+# 禁止访问的路径
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+
+# 爬取延迟
+Crawl-delay: 1

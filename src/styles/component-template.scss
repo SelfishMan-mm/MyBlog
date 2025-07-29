@@ -1,0 +1,216 @@
+
+
+// 组件样式模板
+// 复制此模板来创建新的组件样式
+
+.component-name {
+  // 1. 定位和布局
+  position: relative;
+  display: flex;
+  
+  // 2. 盒模型
+  width: 100%;
+  padding: spacing(4);
+  margin: spacing(2);
+  
+  // 3. 视觉样式
+  background: color(bg-card);
+  border: 1px solid color(border-primary);
+  border-radius: border-radius(lg);
+  box-shadow: shadow(base);
+  
+  // 4. 文字样式
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-weight: font-weight(normal);
+  line-height: map.get($line-heights, normal);
+  
+  // 5. 过渡和动画
+  transition: all transition(base);
+  
+  // 元素样式
+  &__header {
+    @include flex-between;
+    padding: spacing(3) spacing(4);
+    border-bottom: 1px solid color(border-primary);
+    
+    &-title {
+      font-size: font-size(lg);
+      font-weight: font-weight(semibold);
+      color: color(text-primary);
+    }
+    
+    &-actions {
+      display: flex;
+      gap: spacing(2);
+    }
+  }
+  
+  &__body {
+    padding: spacing(4);
+    flex: 1;
+    
+    &-content {
+      color: color(text-secondary);
+      line-height: map.get($line-heights, relaxed);
+    }
+  }
+  
+  &__footer {
+    padding: spacing(3) spacing(4);
+    border-top: 1px solid color(border-primary);
+    @include flex-between;
+  }
+  
+  // 修饰符
+  &--small {
+    padding: spacing(2);
+    
+    .component-name__header {
+      padding: spacing(2) spacing(3);
+    }
+    
+    .component-name__body {
+      padding: spacing(3);
+    }
+  }
+  
+  &--large {
+    padding: spacing(6);
+    
+    .component-name__header {
+      padding: spacing(4) spacing(6);
+    }
+    
+    .component-name__body {
+      padding: spacing(6);
+    }
+  }
+  
+  &--primary {
+    border-color: color(primary);
+    
+    .component-name__header {
+      background: color(primary);
+      color: color(text-primary);
+      border-color: color(primary);
+    }
+  }
+  
+  &--ghost {
+    background: transparent;
+    border-style: dashed;
+  }
+  
+  // 状态
+  &.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    
+    &::after {
+      content: '';
+      @include absolute-full;
+      background: rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    * {
+      pointer-events: none;
+    }
+  }
+  
+  &.is-active {
+    border-color: color(primary);
+    box-shadow: shadow(glow);
+  }
+  
+  &.is-error {
+    border-color: color(danger);
+    
+    .component-name__header {
+      background: color(danger);
+      color: color(text-primary);
+    }
+  }
+  
+  // 交互状态
+  &:hover {
+    @include hover-lift;
+  }
+  
+  &:focus-within {
+    @include focus-visible;
+  }
+  
+  // 响应式
+  @include respond-to(sm) {
+    padding: spacing(3);
+  }
+  
+  @include respond-to(md) {
+    padding: spacing(5);
+    
+    &__header {
+      padding: spacing(4) spacing(5);
+    }
+    
+    &__body {
+      padding: spacing(5);
+    }
+  }
+  
+  @include respond-to(lg) {
+    max-width: 800px;
+    margin: spacing(4) auto;
+  }
+  
+  // 深色主题适配 (如果需要)
+  @media (prefers-color-scheme: dark) {
+    // 深色主题特定样式
+  }
+  
+  // 打印样式 (如果需要)
+  @media print {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  // 动画
+  &.fade-enter-active,
+  &.fade-leave-active {
+    transition: opacity transition(base);
+  }
+  
+  &.fade-enter-from,
+  &.fade-leave-to {
+    opacity: 0;
+  }
+}
+
+// 使用示例：
+/*
+<div class="component-name component-name--primary is-active">
+  <div class="component-name__header">
+    <h3 class="component-name__header-title">标题</h3>
+    <div class="component-name__header-actions">
+      <button class="btn btn--ghost">操作</button>
+    </div>
+  </div>
+  <div class="component-name__body">
+    <div class="component-name__body-content">
+      内容区域
+    </div>
+  </div>
+  <div class="component-name__footer">
+    <span>页脚信息</span>
+    <button class="btn btn--primary">确认</button>
+  </div>
+</div>
+*/

@@ -1,0 +1,117 @@
+// 主题配置文件
+// 支持多主题切换的基础架构
+
+// 默认主题 (深色主题)
+$theme-dark: (
+  // 主色调
+  primary: #409EFF,
+  primary-light: #79bbff,
+  primary-dark: #337ecc,
+  
+  // 背景色
+  bg-primary: #111,
+  bg-secondary: #222,
+  bg-card: rgba(20, 20, 20, 0.95),
+  bg-overlay: rgba(0, 0, 0, 0.8),
+  
+  // 文字颜色
+  text-primary: #fff,
+  text-secondary: #bbb,
+  text-muted: #aaa,
+  text-disabled: #666,
+  
+  // 边框颜色
+  border-primary: #333,
+  border-secondary: rgba(255, 255, 255, 0.1),
+  border-light: rgba(255, 255, 255, 0.05),
+  
+  // 状态颜色
+  success: #67C23A,
+  warning: #E6A23C,
+  danger: #F56C6C,
+  info: #909399
+);
+
+// 浅色主题 (预留)
+$theme-light: (
+  // 主色调
+  primary: #409EFF,
+  primary-light: #79bbff,
+  primary-dark: #337ecc,
+  
+  // 背景色
+  bg-primary: #fff,
+  bg-secondary: #f5f5f5,
+  bg-card: rgba(255, 255, 255, 0.95),
+  bg-overlay: rgba(255, 255, 255, 0.8),
+  
+  // 文字颜色
+  text-primary: #333,
+  text-secondary: #666,
+  text-muted: #999,
+  text-disabled: #ccc,
+  
+  // 边框颜色
+  border-primary: #e0e0e0,
+  border-secondary: rgba(0, 0, 0, 0.1),
+  border-light: rgba(0, 0, 0, 0.05),
+  
+  // 状态颜色
+  success: #67C23A,
+  warning: #E6A23C,
+  danger: #F56C6C,
+  info: #909399
+);
+
+// 主题切换混合器
+@mixin theme($theme-map) {
+  @each $key, $value in $theme-map {
+    --color-#{$key}: #{$value};
+  }
+}
+
+// 主题应用
+:root {
+  @include theme($theme-dark);
+}
+
+// 浅色主题类 (预留)
+.theme-light {
+  @include theme($theme-light);
+}
+
+// 主题切换函数 (预留)
+@function theme-color($key) {
+  @return var(--color-#{$key});
+}
+
+// 使用示例：
+// .component {
+//   background: theme-color(bg-primary);
+//   color: theme-color(text-primary);
+// }
+
+// 系统主题检测
+@media (prefers-color-scheme: light) {
+  :root {
+    // 如果用户系统偏好浅色主题，可以在这里应用浅色主题
+    // @include theme($theme-light);
+  }
+}
+
+// 高对比度主题支持
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-primary: #666;
+    --color-text-secondary: #ccc;
+  }
+}
+
+// 减少动画主题支持
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
