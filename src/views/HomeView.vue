@@ -18,13 +18,10 @@
         <div class="profile-section">
           <div class="profile-card" :class="{ 'animate': isLoaded }">
             <div class="avatar-box">
-              <div class="avatar-placeholder" :class="{ 'animate': isLoaded }">
-                <span>M</span>
-                <div class="avatar-glow"></div>
-              </div>
-            </div>
+  <img src="@/assets/头像.jpg" alt="头像" class="avatar-img" />
+</div>
             <div class="info-box">
-              <h1 class="name" :class="{ 'animate': isLoaded }">meless</h1>
+              <h1 class="name" :class="{ 'animate': isLoaded }">Meless</h1>
               <div class="desc" :class="{ 'animate': isLoaded }">
                 热爱C++、Python、数据爬取与分析、WEB3。喜欢AI-Agent、大模型、后端网络开发。
               </div>
@@ -49,12 +46,43 @@
       </div>
     </section>
 
+    <!-- 技能展示区域 -->
+    <section class="skills-section">
+      <div class="skills-container-wrapper">
+        <h2 class="section-title" :class="{ 'animate': isLoaded }">技能专长</h2>
+        <div class="skills-container">
+          <div v-for="category in ['field', 'language', 'tech', 'interest']" :key="category" class="skill-category">
+            <h3 class="category-title">{{ getCategoryName(category) }}</h3>
+            <div class="skills-grid">
+              <TransitionGroup name="skill-fade">
+                <div
+                  v-for="skill in displayedSkills.filter(s => s.category === category)"
+                  :key="skill.name"
+                  :class="['skill-tag', `skill-${skill.color}`]"
+                >
+                  <span class="skill-name">{{ skill.name }}</span>
+                  <div v-if="skill.level" class="skill-level">
+                    <div class="skill-bar">
+                      <div class="skill-progress" :style="{ width: skill.level + '%' }"></div>
+                    </div>
+                    <span class="skill-percent">{{ skill.level }}%</span>
+                  </div>
+                </div>
+              </TransitionGroup>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import ParticlesBg from '@/components/ParticlesBg.vue'
+
 import { useSEO } from '@/composables/useSEO'
 
 // SEO 优化
@@ -79,7 +107,7 @@ const skills = ref<Skill[]>([
   { name: 'WEB3', category: 'tech', level: 75, color: 'warning' },
   { name: 'AI-Agent', category: 'interest', level: 80, color: 'danger' },
   { name: '大模型', category: 'interest', level: 78, color: 'danger' },
-  { name: '后端网络开发', category: 'tech', level: 82, color: 'primary' },
+  { name: '后端网络开发', category: 'tech', level: 70, color: 'primary' },
   { name: '数据可视化', category: 'tech', level: 85, color: 'primary' },
   { name: '数据清洗', category: 'tech', level: 87, color: 'primary' }
 ])
@@ -92,7 +120,8 @@ const displayedText = ref('')
 const mottos = [
   '一路寒风深如絮，命海浮沉客独行',
   '独帜入渊身未知，身似浮萍命难持',
-  '惊鸿四散鱼逃尽，唯有残帆傲此间'
+  '惊鸿四散鱼逃尽，唯有残帆傲此间',
+  '身如柳絮随风扬，无论云泥意贯一'
 ]
 const fullText = ref('')
 
@@ -278,62 +307,15 @@ onBeforeUnmount(() => {
   margin-bottom: spacing(6);
 }
 
-.avatar-placeholder {
-  position: relative;
-  width: 128px;
-  height: 128px;
-  border-radius: border-radius(full);
-  box-shadow: shadow(card);
-  border: 2.5px solid color(border-secondary);
-  background: linear-gradient(135deg, color(primary), color(primary-light));
-  @include flex-center;
-  overflow: hidden;
-  transform: scale(0.8);
-  opacity: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  &.animate {
-    transform: scale(1);
-    opacity: 1;
-  }
-  
-  span {
-    font-size: font-size(4xl);
-    font-weight: font-weight(bold);
-    color: white;
-    z-index: 2;
-    position: relative;
-  }
-  
-  .avatar-glow {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, color(primary), transparent);
-    animation: rotate 3s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  &:hover {
-    transform: scale(1.05);
-    
-    .avatar-glow {
-      opacity: 0.3;
-    }
-  }
-  
-  @include respond-to(md) {
-    width: 144px;
-    height: 144px;
-    
-    span {
-      font-size: font-size(5xl);
-    }
-  }
+.avatar-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(64,158,255,0.15);
+  border: 2.5px solid #409EFF;
 }
+
 
 @keyframes rotate {
   from {
@@ -402,15 +384,20 @@ onBeforeUnmount(() => {
 
 .skills-container {
   display: grid;
-  gap: spacing(6);
-  
-  @include respond-to(sm) {
+  grid-template-columns: repeat(4, 1fr);
+  gap: spacing(8);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .skills-container {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  @include respond-to(lg) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: spacing(8);
+}
+
+@media (max-width: 600px) {
+  .skills-container {
+    grid-template-columns: 1fr;
   }
 }
 

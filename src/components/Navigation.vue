@@ -102,6 +102,7 @@ const props = withDefaults(defineProps<Props>(), {
     { name: 'about', path: '/about', label: '关于我' },
     { name: 'projects', path: '/projects', label: '项目' },
     { name: 'blog', path: '/blog', label: '博客' },
+
     { name: 'contact', path: '/contact', label: '联系' }
   ]
 })

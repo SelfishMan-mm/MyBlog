@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
@@ -24,6 +25,7 @@ app.config.warnHandler = (msg, vm, trace) => {
 }
 
 // 注册插件
+app.use(createPinia())
 app.use(ElementPlus)
 app.use(router)
 
@@ -32,3 +34,5 @@ registerScrollAnimationDirectives(app)
 
 // 挂载应用
 app.mount('#app')
+
+console.log('App mounted successfully')

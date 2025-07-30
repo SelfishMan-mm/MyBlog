@@ -178,7 +178,7 @@ const projects = ref<Project[]>([
     githubUrl: 'https://github.com/SelfishMan-mm/cpp-chatroom',
     featured: true,
     status: 'completed',
-    startDate: new Date('2024-03-01'),
+    startDate: new Date('2025-05-01'),
     endDate: new Date('2024-05-15')
   },
   {
@@ -190,8 +190,8 @@ const projects = ref<Project[]>([
     githubUrl: 'https://github.com/SelfishMan-mm/CryptoDash',
     featured: true,
     status: 'completed',
-    startDate: new Date('2024-01-10'),
-    endDate: new Date('2024-04-20')
+    startDate: new Date('2025-06-10'),
+    endDate: new Date('2024-07-20')
   },
   {
     id: '3',
@@ -202,19 +202,9 @@ const projects = ref<Project[]>([
     githubUrl: 'https://github.com/SelfishMan-mm',
     featured: false,
     status: 'in-progress',
-    startDate: new Date('2024-06-01')
+    startDate: new Date('2025-06-01')
   },
-  {
-    id: '4',
-    name: 'AI-Agent 助手',
-    description: '基于大语言模型的智能助手，支持自然语言交互和任务自动化。',
-    longDescription: '一个智能的 AI 助手系统，基于大语言模型技术，支持自然语言理解和生成。使用 LangChain 框架构建智能对话流程，FastAPI 提供高性能的 API 服务，React 构建用户界面。具备任务自动化、知识问答、代码生成等多种功能。',
-    techStack: ['Python', 'OpenAI API', 'LangChain', 'FastAPI', 'React'],
-    githubUrl: 'https://github.com/SelfishMan-mm',
-    featured: false,
-    status: 'planned',
-    startDate: new Date('2024-08-01')
-  },
+
   {
     id: '5',
     name: '个人博客网站',
@@ -224,7 +214,7 @@ const projects = ref<Project[]>([
     githubUrl: 'https://github.com/SelfishMan-mm',
     featured: true,
     status: 'in-progress',
-    startDate: new Date('2024-12-01')
+    startDate: new Date('2025-7-18')
   }
 ])
 

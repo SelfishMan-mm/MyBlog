@@ -1,19 +1,22 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { fileURLToPath, URL } from 'node:url'
+
+
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@/components': resolve(__dirname, 'src/components'),
-      '@/views': resolve(__dirname, 'src/views'),
-      '@/assets': resolve(__dirname, 'src/assets'),
-      '@/utils': resolve(__dirname, 'src/utils'),
-      '@/stores': resolve(__dirname, 'src/stores'),
-      '@/styles': resolve(__dirname, 'src/styles')
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@/components': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@/views': fileURLToPath(new URL('./src/views', import.meta.url)),
+      '@/assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+      '@/utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@/stores': fileURLToPath(new URL('./src/stores', import.meta.url)),
+      '@/styles': fileURLToPath(new URL('./src/styles', import.meta.url))
     }
   },
   css: {
@@ -22,14 +25,13 @@ export default defineConfig({
         additionalData: `
           @use "@/styles/variables.scss" as *;
           @use "@/styles/mixins.scss" as *;
-        `,
-        api: 'modern-compiler'
+        `
       }
     }
   },
   define: {
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '0.0.0'),
-    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development')
+    __APP_VERSION__: JSON.stringify('1.0.0'),
+    __DEV__: JSON.stringify(true)
   },
   server: {
     port: 3000,
@@ -38,7 +40,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: process.env.NODE_ENV === 'development',
+    sourcemap: true,
     rollupOptions: {
       output: {
         manualChunks: {

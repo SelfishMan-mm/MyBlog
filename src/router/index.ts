@@ -32,6 +32,7 @@ const router = createRouter({
       component: BlogView,
       meta: { title: '博客', transitionName: 'zoom' }
     },
+
     { 
       path: '/contact', 
       name: 'contact', 

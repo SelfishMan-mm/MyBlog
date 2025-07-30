@@ -121,7 +121,7 @@ const currentYear = computed(() => new Date().getFullYear())
 }
 
 // 响应式优化
-@include respond-below(md) {
+@include respond-to(mobile) {
   .social-icons {
     gap: spacing(3);
   }
@@ -135,8 +135,6 @@ const currentYear = computed(() => new Date().getFullYear())
       height: 18px;
     }
   }
-  
-
 }
 
 

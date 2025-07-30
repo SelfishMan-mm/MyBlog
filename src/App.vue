@@ -5,12 +5,17 @@
       <router-view></router-view>
     </main>
     <Footer />
+    
+    <!-- 全局音乐播放器 - APlayer版本 -->
+    <APlayerMusic />
   </div>
 </template>
 
 <script setup lang="ts">
 import Navigation from '@/components/Navigation.vue'
 import Footer from '@/components/Footer.vue'
+import APlayerMusic from '@/components/APlayerMusic.vue'
+console.log('App.vue loaded')
 </script>
 
 <style lang="scss">
@@ -27,7 +32,7 @@ import Footer from '@/components/Footer.vue'
 .app-main {
   flex: 1;
   padding: 0;
-  background: color(bg-primary);
+  background: #111;
   position: relative;
 }
 </style>

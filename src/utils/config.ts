@@ -7,8 +7,8 @@ export const APP_CONFIG = {
   title: import.meta.env.VITE_APP_TITLE || 'meless - 独游的小船',
   description: import.meta.env.VITE_APP_DESCRIPTION || '苏州经贸职业技术学院学生，专注于C++、Python、数据分析、WEB3技术',
   keywords: import.meta.env.VITE_APP_KEYWORDS?.split(',') || ['个人博客', 'C++', 'Python', '数据分析', 'WEB3', 'AI-Agent'],
-  version: __APP_VERSION__,
-  isDev: __DEV__
+  version: '1.0.0',
+  isDev: import.meta.env.DEV
 } as const
 
 // 个人信息配置
